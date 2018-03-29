@@ -18,6 +18,7 @@ TOOLS USED
 - nadeel: script moet geschreven worden om images in bulk te analyseren
 - nadeel: traag
 - test met OB: 1u45 min. heeft het niet kunnen afmaken omdat de batch te groot was voor het CSV-bestand. Daarom werden de CSV-bestanden nog niet gegenereerd, het HTML-rapport en de output van het treecommando.
+- is in de eerste plaats een command line tool, maar er is ook een GUI voorzien (link github)
 
 ## 2. Droid
 - ontwikkeld door National Archives UK
