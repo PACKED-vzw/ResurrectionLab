@@ -14,7 +14,6 @@ TOOLS USED
 - analyseert ook de disk met fiwalk (forensic analyse)
 - brengt de structuur van de disk in kaart (via het tree commando)
 - bespaart werk
-- nadeel: command line tool
 - nadeel: script moet geschreven worden om images in bulk te analyseren
 - nadeel: traag
 - test met OB: 1u45 min. heeft het niet kunnen afmaken omdat de batch te groot was voor het CSV-bestand. Daarom werden de CSV-bestanden nog niet gegenereerd, het HTML-rapport en de output van het treecommando.
@@ -81,7 +80,7 @@ TOOLS USED
 - maakt ook regelrechte fouten met XML files zonder header. geeft vier mogelijkheden, waarvan geen enkele juist is. droid en siegfried herkennen dit niet.
 - vermoedelijk gebaseerd op file
 
-##9. FITS
+## 9. FITS
 - ontwikkeld door Harvard university
 - bestaat uit verschillende open source identificatie en validatie tools, o.m. DROID, Exiftool, Apache Tika, Jhove, Mediainfo, File etc.
 - geeft een XML-bestand per bestand
