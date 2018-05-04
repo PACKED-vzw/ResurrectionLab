@@ -4,7 +4,7 @@
 # for Liberaal Archief
 # author: Nastasia Vanderperren (PACKED vzw)
 # script written for macOS and OS X systems
-# prerequisites: kryoflux software, hfsutil, siegfried and bagit.py
+# prerequisites: ClamAV, kryoflux software, hfsutil, siegfried and bagit.py
 # source: John Durno, http://journal.code4lib.org/articles/11986
 #
 #############################################################
@@ -29,7 +29,8 @@ echo "Done creating folder structure!"
 
 # create an image of the files with the kryoflux
 echo "Creating image with the kryoflux controller..."
-dtc -p -fimage/$UI/$UI -i0 -fimage/$UI.img -i9 2>&1 | tee meta/image_$UI.log  # create Apple DOS 400/800K sector image
+# create Apple DOS 400/800K sector image
+dtc -p -fimage/$UI/$UI -i0 -fimage/$UI.img -i9 2>&1 | tee meta/image_$UI.log  
 diskimage=image/$UI.img
 cp $diskimage handlingcopy.img # create handling copy
 handling=handlingcopy.img
@@ -58,6 +59,12 @@ echo "Start characterizing the files of the disk..."
 sf -hash md5 -z -csv content > meta/file_identification.csv  # creates also checksum for each file
 echo "Done characterizing files!"
 
+# scan the image
+echo "Scanning the image"
+freshclam -update # update virus database
+clamscan -r --bell $handling content/ > meta/virusscan.txt
+echo "Done scanning the image!"
+
 # delete handlingcopy
 rm $handling
 
@@ -66,5 +73,6 @@ rm $handling
 #cd ..
 #bagit.py $UI
 #echo "Done creating BagIt!"
+
 
 echo "Done processing Macintosh floppy!"
