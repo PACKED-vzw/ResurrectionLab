@@ -50,7 +50,7 @@ echo "Done identifying the file system!"
 echo "Extracting files and folders of image..."
 hmount $handling > meta/hmount.txt
     hls -i -a -l -R > meta/index.txt
-    hcopy -r :* content/
+    hcopy -m :* content/
 humount
 echo "Done extracting files!"
 
