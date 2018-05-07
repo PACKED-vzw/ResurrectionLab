@@ -32,7 +32,7 @@ echo "Creating image with the kryoflux controller..."
 # create Apple DOS 400/800K sector image
 dtc -p -fimage/$UI/$UI -i0 -fimage/$UI.img -i9 2>&1 | tee meta/image_$UI.log  
 diskimage=image/$UI.img
-cp $diskimage handlingcopy.img # create handling copy
+rsync -a  $diskimage handlingcopy.img # create handling copy
 handling=handlingcopy.img
 echo "Done creating image!"
 
