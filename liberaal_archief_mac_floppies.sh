@@ -76,3 +76,4 @@ rm $handling
 
 
 echo "Done processing Macintosh floppy!"
+echo -ne '\a'
