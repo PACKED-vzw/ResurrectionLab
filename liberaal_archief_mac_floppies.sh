@@ -10,10 +10,9 @@
 #############################################################
 
 # parameters
-
 if [ $# == 0 ]
 then # if there is no parameter
-    echo "No arguements found." 
+    echo "No arguments found." 
     echo "Give a name to the floppy image: "
     read UI
 else
@@ -48,11 +47,22 @@ echo "Done identifying the file system!"
 
 # get the contents and structure of the files on the disk
 echo "Extracting files and folders of image..."
-hmount $handling > meta/hmount.txt
-    hls -i -a -l -R > meta/index.txt
-    hcopy -m :* content/
+hmount $handling > meta/hmount.txt # keep this until better way found to get this information
+#    hls -i -a -l -R > meta/index.txt
+#    hcopy -m :* content/
 humount
-echo "Done extracting files!"
+
+# maybe better this way: 
+hdiutil attach -readonly $handling | sed -E 's/[[:space:]]+/,/g' > mount.txt # store information in helper txt file
+# use the mount.txt file to split mounting location and device location in variables
+mount_and_dev_string=$(<mount.txt)
+mount_location=${mount_and_dev_string##*,}
+dev_location=${mount_and_dev_string%,*}
+rsync -ra $mount_location content/ # copy files using rsync
+tree -DUN --si $mount_location > meta/index.txt # create index with last modified date and file size
+hdiutil detach $dev_location
+rm mount.txt # delete helper txt file
+echo "Done extracting files and folders!"
 
 # to do: file characterization"
 echo "Start characterizing the files of the disk..."
