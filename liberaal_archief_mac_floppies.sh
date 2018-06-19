@@ -53,14 +53,16 @@ hmount $handling > meta/hmount.txt # keep this until better way found to get thi
 humount
 
 # maybe better this way: 
-hdiutil attach -readonly $handling | sed -E 's/[[:space:]]+/,/g' > mount.txt # store information in helper txt file
+hdiutil attach -readonly $handling | sed -E 's/[[:space:]]+/ /g' > mount.txt # store information in helper txt file
 # use the mount.txt file to split mounting location and device location in variables
 mount_and_dev_string=$(<mount.txt)
-mount_location=${mount_and_dev_string##*,}
-dev_location=${mount_and_dev_string%,*}
-rsync -ra $mount_location content/ # copy files using rsync
-tree -DUN --si $mount_location > meta/index.txt # create index with last modified date and file size
-hdiutil detach $dev_location
+dev_location=${mount_and_dev_string%%' '*}
+mount_location=${mount_and_dev_string#*' '}
+if [ ! -z "$mount_location" ]; then
+        rsync -ra "$mount_location"/ content/ # copy files using rsync
+        tree -DUN --si "$mount_location" > meta/index.txt # create index with last modified date and file size
+fi
+hdiutil detach "$dev_location"
 rm mount.txt # delete helper txt file
 echo "Done extracting files and folders!"
 
