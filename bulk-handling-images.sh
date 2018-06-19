@@ -1,4 +1,6 @@
 #!/bin/bash
+# do some handling on different folders that contain disk images
+# author: Nastasia Vanderperren (PACKED vzw)
 #
 ##############
 
