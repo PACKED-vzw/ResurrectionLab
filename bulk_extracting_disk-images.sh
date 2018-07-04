@@ -10,6 +10,7 @@ for folder in $1/*
 do
     echo $folder
     cd $folder
+    rm -rf content
     mkdir content
 
     rsync -a $folder/image/*.img handling.img
@@ -28,5 +29,11 @@ do
     hdiutil detach "$dev_location"
     rm mount.txt # delete helper txt file
     rm $handling
+    
     echo "Done extracting files and folders of $folder"
+
+    echo "Start characterizing the files of the disk..."
+    sf -hash md5 -z -csv content > meta/file_identification.csv  # creates also checksum for each file
+    echo "Done characterizing files!"
+
 done

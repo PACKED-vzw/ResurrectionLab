@@ -48,7 +48,7 @@ echo "Done identifying the file system!"
 # get the contents and structure of the files on the disk
 echo "Extracting files and folders of image..."
 hmount $handling > meta/hmount.txt # keep this until better way found to get this information
-#    hls -i -a -l -R > meta/index.txt
+    hls -i -a -l -R > meta/index.txt
 #    hcopy -m :* content/
 humount
 
@@ -60,7 +60,6 @@ dev_location=${mount_and_dev_string%%' '*}
 mount_location=${mount_and_dev_string#*' '}
 if [ ! -z "$mount_location" ]; then
     rsync -ra "$mount_location"/ content/ # copy files using rsync
-    tree -DUN --si "$mount_location" > meta/index.txt # create index with last modified date and file size
 fi
 hdiutil detach "$dev_location"
 rm mount.txt # delete helper txt file
